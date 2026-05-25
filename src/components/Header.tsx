@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage, Language } from '../context/LanguageContext';
 import { Menu, X, Sun, Moon, Sparkles, ShoppingBag, Trash2, Plus, Minus, ArrowRight, Check } from 'lucide-react';
-import { CartItem } from '../types';
+import { CartItem, PageId } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface HeaderProps {
-  activePage: 'home' | 'collections' | 'connect';
-  setActivePage: (page: 'home' | 'collections' | 'connect') => void;
+  activePage: PageId;
+  setActivePage: (page: PageId) => void;
   setSelectedCategory: (category: string) => void;
   cartItems: CartItem[];
   updateQuantity: (productId: string, delta: number) => void;
@@ -30,16 +30,17 @@ export default function Header({
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutSimulated, setCheckoutSimulated] = useState(false);
 
-  const navLinks = [
+  const navLinks: Array<{ id: PageId }> = [
     { id: 'home' },
     { id: 'collections' },
-    { id: 'connect' }
-  ] as const;
+    { id: 'recipes' },
+    { id: 'connect' },
+  ];
 
   const totalItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const totalPrice = cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0);
 
-  const handleNavClick = (pageId: 'home' | 'collections' | 'connect') => {
+  const handleNavClick = (pageId: PageId) => {
     setActivePage(pageId);
     if (pageId === 'collections') {
       setSelectedCategory('All');

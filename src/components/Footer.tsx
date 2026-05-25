@@ -2,9 +2,10 @@ import { useState, FormEvent } from 'react';
 import { Sparkles, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
+import { PageId } from '../types';
 
 interface FooterProps {
-  setActivePage: (page: 'home' | 'collections' | 'connect') => void;
+  setActivePage: (page: PageId) => void;
 }
 
 export default function Footer({ setActivePage }: FooterProps) {
@@ -112,9 +113,18 @@ export default function Footer({ setActivePage }: FooterProps) {
                 </button>
               </li>
               <li>
-                <button 
+                <button
+                  id="foot-nav-recipes"
+                  onClick={() => setActivePage('recipes')}
+                  className="hover:text-brand-terracotta transition-colors duration-200 cursor-pointer block text-left uppercase tracking-wider"
+                >
+                  {t('nav_recipes').split(' — ')[0]}
+                </button>
+              </li>
+              <li>
+                <button
                   id="foot-nav-connect"
-                  onClick={() => setActivePage('connect')} 
+                  onClick={() => setActivePage('connect')}
                   className="hover:text-brand-terracotta transition-colors duration-200 cursor-pointer block text-left uppercase tracking-wider"
                 >
                   {t('nav_connect')}

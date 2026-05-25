@@ -12,7 +12,8 @@ import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles } from 'lucide-react';
-import { CartItem, Product } from './types';
+import { CartItem, PageId, Product } from './types';
+import Recipes from './components/Recipes';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,7 +25,7 @@ const queryClient = new QueryClient({
 });
 
 function AppContent() {
-  const [activePage, setActivePage] = useState<'home' | 'collections' | 'connect'>('home');
+  const [activePage, setActivePage] = useState<PageId>('home');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   
   // High-performance client cart state
@@ -153,6 +154,21 @@ function AppContent() {
               >
                 {/* Stockists and Custom inquiry Form view */}
                 <Connect />
+              </motion.div>
+            )}
+
+            {activePage === 'recipes' && (
+              <motion.div
+                key="recipes-page"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Recipes
+                  setActivePage={setActivePage}
+                  setSelectedCategory={setSelectedCategory}
+                />
               </motion.div>
             )}
           </AnimatePresence>
