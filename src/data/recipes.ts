@@ -1,4 +1,4 @@
-import { Recipe } from '../types';
+﻿import { Recipe } from '../types';
 
 export const recipes: Recipe[] = [
   {
@@ -217,7 +217,7 @@ export const recipes: Recipe[] = [
     ],
     note: 'Best consumed within minutes of assembly — granola retains its signature crunch before the yogurt softens it.',
     note_ar: 'يُستهلك في غضون دقائق من التحضير — تحتفظ الجرانولا بقرمشتها المميزة قبل أن يليّنها الزبادي.',
-    note_tr: "Hazırlandıktan dakikalar içinde tüketilmesi en iyisidir — yoğurt yumuşatmadan önce granola imza çıtırtısını korur.",
+    note_tr: 'Hazırlandıktan dakikalar içinde tüketilmesi en iyisidir — yoğurt yumuşatmadan önce granola imza çıtırtısını korur.',
   },
   {
     id: 'black-lime-seafood-risotto',
