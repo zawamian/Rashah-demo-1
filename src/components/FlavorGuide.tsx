@@ -27,6 +27,10 @@ interface ProfileItem {
   };
   recommendsProductId: string; // real product ID from products list
   sensoryDescriptors: string;
+  recipeSuggestion: {
+    dishName: string;
+    instructions: string;
+  };
 }
 
 const PROFILE_DATA: ProfileItem[] = [
@@ -47,7 +51,11 @@ const PROFILE_DATA: ProfileItem[] = [
       sweetness: 40
     },
     recommendsProductId: 'aleppo-smoked-pepper-flakes',
-    sensoryDescriptors: 'WARM • FRUITY • BALANCED'
+    sensoryDescriptors: 'WARM • FRUITY • BALANCED',
+    recipeSuggestion: {
+      dishName: 'Aleppo Butter Eggs over Labneh',
+      instructions: 'Melt 2 tbsp unsalted butter with 1 tsp Heirloom Aleppo Pepper over medium heat until foamy and red. Spoon over poached eggs resting on a thick bed of salted labneh, finished with a fresh mint leaf pinch.'
+    }
   },
   {
     id: 'volcanic-sumac',
@@ -66,7 +74,11 @@ const PROFILE_DATA: ProfileItem[] = [
       sweetness: 20
     },
     recommendsProductId: 'rashah-signature-blend',
-    sensoryDescriptors: 'TART • SALINE • VIBRANT'
+    sensoryDescriptors: 'TART • SALINE • VIBRANT',
+    recipeSuggestion: {
+      dishName: 'Fattoush Salad with Volcanic Zest',
+      instructions: 'Whisk 3 tbsp extra virgin olive oil with 1.5 tsp of Wild Violet Sumac, 1 tbsp fresh lemon juice, and sea salt. Toss with crisp cucumbers, tomatoes, toasted flatbread squares, and fresh purslane.'
+    }
   },
   {
     id: 'sun-loomi',
@@ -85,7 +97,11 @@ const PROFILE_DATA: ProfileItem[] = [
       sweetness: 10
     },
     recommendsProductId: 'loomi-fermented-black-lime',
-    sensoryDescriptors: 'EARTHY-CITRUS • MUSKY • ESSENTIAL'
+    sensoryDescriptors: 'EARTHY-CITRUS • MUSKY • ESSENTIAL',
+    recipeSuggestion: {
+      dishName: 'Loomi Saffron Rice Pilaf',
+      instructions: 'Add 1 tsp finely ground Fermented Black Lime into boiling basmati rice infused with saffron threads, toasted pine nuts, and a pinch of ground cardamom. Great companion for roasted seabass.'
+    }
   },
   {
     id: 'royal-zaatar',
@@ -104,7 +120,11 @@ const PROFILE_DATA: ProfileItem[] = [
       sweetness: 15
     },
     recommendsProductId: 'zaatar-premium-artisanal',
-    sensoryDescriptors: 'HERBACEOUS • NUTTY • FRAGRANT'
+    sensoryDescriptors: 'HERBACEOUS • NUTTY • FRAGRANT',
+    recipeSuggestion: {
+      dishName: 'Heritage Za\'atar Flatbread (Man\'oushe)',
+      instructions: 'Combine equal parts Royal Za\'atar and premium extra virgin olive oil. Spread generously over raw flatdough rounds and bake at 450°F (230°C) until bubbly and golden.'
+    }
   },
   {
     id: 'cardamom-rose',
@@ -123,7 +143,11 @@ const PROFILE_DATA: ProfileItem[] = [
       sweetness: 80
     },
     recommendsProductId: 'cardamom-rose-pecan-granola',
-    sensoryDescriptors: 'FLORAL • WARM • BOTANICAL'
+    sensoryDescriptors: 'FLORAL • WARM • BOTANICAL',
+    recipeSuggestion: {
+      dishName: 'Damask Spiced Labneh Parfait',
+      instructions: 'Layer thick Greek yogurt with raw wildflower honey, fresh berries, and 3 tbsp of Cardamom & Rose Fusion. Garnish with a sprinkle of crushed pistachios and edible organic rose petals.'
+    }
   }
 ];
 
@@ -499,6 +523,22 @@ export default function FlavorGuide({ addToCart, cartItems }: FlavorGuideProps) 
                       ))}
                     </ul>
                   </div>
+                </div>
+
+                {/* QUICK RECIPE SUGGESTION */}
+                <div className="mt-6 p-4 rounded bg-brand-ochre/5 dark:bg-brand-ochre/10 border border-brand-ochre/20">
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <Sparkles size={12} className="text-brand-ochre animate-pulse" />
+                    <span className="font-mono-data text-[10px] tracking-widest text-brand-ochre font-bold uppercase block">
+                      QUICK RECIPE SUGGESTION
+                    </span>
+                  </div>
+                  <h5 className="font-serif text-sm font-bold text-brand-charcoal dark:text-brand-cream mb-1">
+                    {selectedItem.recipeSuggestion.dishName}
+                  </h5>
+                  <p className="text-[11px] text-brand-charcoal/85 dark:text-brand-cream/85 leading-relaxed font-sans">
+                    {selectedItem.recipeSuggestion.instructions}
+                  </p>
                 </div>
               </div>
 

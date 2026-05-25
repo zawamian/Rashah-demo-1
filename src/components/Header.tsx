@@ -177,38 +177,40 @@ export default function Header({
 
         {/* Mobile Full-Screen Menu Overlay */}
         {mobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 top-20 z-40 bg-brand-cream dark:bg-brand-charcoal transition-colors duration-300 flex flex-col justify-between px-8 py-10 border-t border-brand-charcoal/10 dark:border-brand-cream/10">
-            <div className="flex flex-col gap-6 pt-6">
-              <span className="text-[10px] tracking-[0.3em] text-brand-ochre font-bold block mb-2">SECTIONS</span>
-              {navLinks.map((link) => (
-                <button
-                  id={`mobile-nav-link-${link.id}`}
-                  key={link.id}
-                  onClick={() => handleNavClick(link.id)}
-                  className="flex items-baseline justify-between py-3 border-b border-brand-charcoal/5 dark:border-brand-cream/5 text-left cursor-pointer group"
-                >
-                  <span className={`font-serif text-3xl tracking-[0.05em] ${activePage === link.id ? 'text-brand-terracotta' : 'text-brand-charcoal dark:text-brand-cream'}`}>
-                    {link.label}
-                  </span>
-                  <span className="font-serif text-xl text-brand-charcoal/40 dark:text-brand-cream/40">
-                    {link.labelAr}
-                  </span>
-                </button>
-              ))}
-            </div>
+          <div className="md:hidden fixed inset-x-0 bottom-0 top-20 z-40 bg-brand-cream dark:bg-brand-charcoal transition-colors duration-300 border-t border-brand-charcoal/10 dark:border-brand-cream/10 overflow-y-auto">
+            <div className="min-h-full flex flex-col justify-between px-6 py-6 sm:px-8 sm:py-8 gap-8">
+              <div className="flex flex-col gap-4 sm:gap-6 pt-2">
+                <span className="text-[10px] tracking-[0.3em] text-brand-ochre font-bold block mb-1">SECTIONS</span>
+                {navLinks.map((link) => (
+                  <button
+                    id={`mobile-nav-link-${link.id}`}
+                    key={link.id}
+                    onClick={() => handleNavClick(link.id)}
+                    className="flex items-baseline justify-between py-2.5 sm:py-3 border-b border-brand-charcoal/5 dark:border-brand-cream/5 text-left cursor-pointer group"
+                  >
+                    <span className={`font-serif text-2xl sm:text-3xl tracking-[0.05em] transition-colors duration-200 ${activePage === link.id ? 'text-brand-terracotta' : 'text-brand-charcoal dark:text-brand-cream'}`}>
+                      {link.label}
+                    </span>
+                    <span className="font-serif text-lg sm:text-xl text-brand-charcoal/40 dark:text-brand-cream/40">
+                      {link.labelAr}
+                    </span>
+                  </button>
+                ))}
+              </div>
 
-            <div className="flex flex-col gap-6">
-              <button
-                id="mobile-drawer-cta-btn"
-                onClick={() => handleNavClick('connect')}
-                className="w-full text-center py-4 bg-brand-charcoal dark:bg-brand-cream text-brand-cream dark:text-brand-charcoal text-xs tracking-[0.2em] font-semibold hover:bg-brand-terracotta dark:hover:bg-brand-terracotta hover:text-brand-cream transition-all duration-300"
-              >
-                STOCKIST INQUIRY
-              </button>
-              
-              <div className="flex justify-between items-center text-[10px] tracking-[0.1em] text-brand-charcoal/50 dark:text-brand-cream/50">
-                <span>RASHAH © Riyadh, KSA</span>
-                <span className="flex items-center gap-1"><Sparkles size={10} className="text-brand-terracotta" /> COARSE & REFINED</span>
+              <div className="flex flex-col gap-5 sm:gap-6 mt-auto">
+                <button
+                  id="mobile-drawer-cta-btn"
+                  onClick={() => handleNavClick('connect')}
+                  className="w-full text-center py-3.5 sm:py-4 bg-brand-charcoal dark:bg-brand-cream text-brand-cream dark:text-brand-charcoal text-xs tracking-[0.2em] font-semibold hover:bg-brand-terracotta dark:hover:bg-brand-terracotta hover:text-brand-cream transition-all duration-300"
+                >
+                  STOCKIST INQUIRY
+                </button>
+                
+                <div className="flex justify-between items-center text-[9px] sm:text-[10px] tracking-[0.1em] text-brand-charcoal/50 dark:text-brand-cream/50">
+                  <span>RASHAH © Riyadh, KSA</span>
+                  <span className="flex items-center gap-1"><Sparkles size={10} className="text-brand-terracotta" /> COARSE & REFINED</span>
+                </div>
               </div>
             </div>
           </div>
