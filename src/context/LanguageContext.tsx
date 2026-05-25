@@ -165,6 +165,19 @@ const TRANSLATIONS = {
     recommended_pairings: "RECOMMENDED PAIRINGS",
     testimonials_label: "FROM OUR COMMUNITY",
     testimonials_heading: "Trusted by discerning kitchens worldwide.",
+
+    // Recipes Page
+    nav_recipes: "RECIPES — المطبخ",
+    recipes_page_title: "FROM OUR KITCHEN",
+    recipes_title: "RECIPES",
+    recipes_subtitle: "From our kitchen to yours",
+    recipes_prep: "PREP",
+    recipes_cook: "COOK",
+    recipes_servings: "SERVES",
+    recipes_ingredients: "INGREDIENTS",
+    recipes_method: "METHOD",
+    recipes_tip: "TIP",
+    recipes_shop_cta: "→ SHOP",
   },
   ar: {
     // Brand & Header
@@ -328,6 +341,19 @@ const TRANSLATIONS = {
     recommended_pairings: "الاقترانات وتوصيات التقديم المتناغمة:",
     testimonials_label: "من مجتمعنا",
     testimonials_heading: "موثوق به في مطابخ الذواقة حول العالم.",
+
+    // Recipes Page
+    nav_recipes: "الوصفات — المطبخ",
+    recipes_page_title: "من مطبخنا",
+    recipes_title: "الوصفات",
+    recipes_subtitle: "من مطبخنا إلى مطبخكم",
+    recipes_prep: "التحضير",
+    recipes_cook: "الطهي",
+    recipes_servings: "يكفي لـ",
+    recipes_ingredients: "المكونات",
+    recipes_method: "طريقة التحضير",
+    recipes_tip: "نصيحة",
+    recipes_shop_cta: "← تسوق",
   },
   tr: {
     // Brand & Header
@@ -491,6 +517,19 @@ const TRANSLATIONS = {
     recommended_pairings: "ÖNERİLEN EŞLEŞMELER",
     testimonials_label: "TOPLULUĞUMUZDAN",
     testimonials_heading: "Dünyanın dört bir yanındaki seçkin mutfakların tercihi.",
+
+    // Recipes Page
+    nav_recipes: "TARİFLER — المطبخ",
+    recipes_page_title: "MUTFAĞIMIZDAN",
+    recipes_title: "TARİFLER",
+    recipes_subtitle: "Mutfağımızdan mutfağınıza",
+    recipes_prep: "HAZIRLIK",
+    recipes_cook: "PİŞİRME",
+    recipes_servings: "KİŞİ",
+    recipes_ingredients: "MALZEMELER",
+    recipes_method: "YÖNTEMİ",
+    recipes_tip: "İPUCU",
+    recipes_shop_cta: "→ SATIN AL",
   }
 } as const;
 
