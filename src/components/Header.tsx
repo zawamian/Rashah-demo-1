@@ -203,82 +203,84 @@ export default function Header({
 
         </div>
 
-        {/* Mobile Full-Screen Menu Overlay (Highly responsive with optimized mobile paddings) */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div 
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="md:hidden fixed inset-x-0 bottom-0 top-20 z-40 bg-brand-cream/95 dark:bg-brand-charcoal/95 backdrop-blur-md transition-all duration-300 border-t border-brand-charcoal/10 dark:border-brand-cream/10 overflow-hidden"
-            >
-              <div className="h-full flex flex-col justify-between p-6 sm:p-8 gap-6 overflow-y-auto">
-                <div className="flex flex-col gap-3 sm:gap-4 pt-1">
-                  <span className="text-[10px] tracking-[0.3em] text-brand-ochre font-bold block mb-1 uppercase">
-                    {t('sections_label')}
+      </header>
+
+      {/* Mobile Full-Screen Menu Overlay — rendered outside <header> to avoid backdrop-filter
+          creating a new containing block for position:fixed, which would collapse the overlay to 0 height */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="md:hidden fixed inset-x-0 bottom-0 top-20 z-40 bg-brand-cream/95 dark:bg-brand-charcoal/95 backdrop-blur-md transition-all duration-300 border-t border-brand-charcoal/10 dark:border-brand-cream/10 overflow-hidden"
+          >
+            <div className="h-full flex flex-col justify-between p-6 sm:p-8 gap-6 overflow-y-auto">
+              <div className="flex flex-col gap-3 sm:gap-4 pt-1">
+                <span className="text-[10px] tracking-[0.3em] text-brand-ochre font-bold block mb-1 uppercase">
+                  {t('sections_label')}
+                </span>
+                {navLinks.map((link) => (
+                  <button
+                    id={`mobile-nav-link-${link.id}`}
+                    key={link.id}
+                    onClick={() => handleNavClick(link.id)}
+                    className="flex items-baseline justify-between py-2 sm:py-2.5 border-b border-brand-charcoal/5 dark:border-brand-cream/5 text-left cursor-pointer group"
+                  >
+                    <span className={`font-serif text-xl sm:text-2xl tracking-[0.05em] transition-colors duration-200 uppercase ${activePage === link.id ? 'text-brand-terracotta font-bold' : 'text-brand-charcoal dark:text-brand-cream'}`}>
+                      {t(`nav_${link.id}` as any).split(' — ')[0]}
+                    </span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-4 mt-auto">
+                {/* Mobile Language Selector */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-[9px] tracking-[0.2em] text-brand-ochre font-bold uppercase block">
+                    Language / اللغة / Dil
                   </span>
-                  {navLinks.map((link) => (
-                    <button
-                      id={`mobile-nav-link-${link.id}`}
-                      key={link.id}
-                      onClick={() => handleNavClick(link.id)}
-                      className="flex items-baseline justify-between py-2 sm:py-2.5 border-b border-brand-charcoal/5 dark:border-brand-cream/5 text-left cursor-pointer group"
-                    >
-                      <span className={`font-serif text-xl sm:text-2xl tracking-[0.05em] transition-colors duration-200 uppercase ${activePage === link.id ? 'text-brand-terracotta font-bold' : 'text-brand-charcoal dark:text-brand-cream'}`}>
-                        {t(`nav_${link.id}` as any).split(' — ')[0]}
-                      </span>
-                    </button>
-                  ))}
+                  <div className="grid grid-cols-3 gap-2">
+                    {(['en', 'ar', 'tr'] as const).map((lang) => (
+                      <button
+                        key={lang}
+                        onClick={() => setLanguage(lang)}
+                        className={`py-1.5 text-[10px] tracking-[0.1em] font-mono-data rounded cursor-pointer transition-all duration-300 uppercase text-center border ${
+                          language === lang
+                            ? 'bg-brand-terracotta text-brand-cream border-brand-terracotta font-bold'
+                            : 'bg-transparent text-brand-charcoal/60 dark:text-brand-cream/60 border-brand-charcoal/10 dark:border-brand-cream/10 hover:border-brand-terracotta'
+                        }`}
+                      >
+                        {lang === 'en' ? 'ENGLISH' : lang === 'ar' ? 'العربية' : 'TÜRKÇE'}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="flex flex-col gap-4 mt-auto">
-                  {/* Mobile Language Selector */}
-                  <div className="flex flex-col gap-2">
-                    <span className="text-[9px] tracking-[0.2em] text-brand-ochre font-bold uppercase block">
-                      Language / اللغة / Dil
-                    </span>
-                    <div className="grid grid-cols-3 gap-2">
-                      {(['en', 'ar', 'tr'] as const).map((lang) => (
-                        <button
-                          key={lang}
-                          onClick={() => setLanguage(lang)}
-                          className={`py-1.5 text-[10px] tracking-[0.1em] font-mono-data rounded cursor-pointer transition-all duration-300 uppercase text-center border ${
-                            language === lang
-                              ? 'bg-brand-terracotta text-brand-cream border-brand-terracotta font-bold'
-                              : 'bg-transparent text-brand-charcoal/60 dark:text-brand-cream/60 border-brand-charcoal/10 dark:border-brand-cream/10 hover:border-brand-terracotta'
-                          }`}
-                        >
-                          {lang === 'en' ? 'ENGLISH' : lang === 'ar' ? 'العربية' : 'TÜRKÇE'}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                <button
+                  id="mobile-drawer-cta-btn"
+                  onClick={() => handleNavClick('connect')}
+                  className="w-full text-center py-3 bg-brand-charcoal dark:bg-brand-cream text-brand-cream dark:text-brand-charcoal text-xs tracking-[0.2em] font-semibold hover:bg-brand-terracotta dark:hover:bg-brand-terracotta hover:text-brand-cream transition-all duration-300 cursor-pointer"
+                >
+                  {t('nav_cta')}
+                </button>
 
-                  <button
-                    id="mobile-drawer-cta-btn"
-                    onClick={() => handleNavClick('connect')}
-                    className="w-full text-center py-3 bg-brand-charcoal dark:bg-brand-cream text-brand-cream dark:text-brand-charcoal text-xs tracking-[0.2em] font-semibold hover:bg-brand-terracotta dark:hover:bg-brand-terracotta hover:text-brand-cream transition-all duration-300 cursor-pointer"
-                  >
-                    {t('nav_cta')}
-                  </button>
-                  
-                  <div className="flex justify-between items-center text-[9px] tracking-[0.1em] text-brand-charcoal/50 dark:text-brand-cream/50 mt-1">
-                    <span>{t('meta_footer')}</span>
-                    <span className="flex items-center gap-1">
-                      <Sparkles size={10} className="text-brand-terracotta" /> {t('meta_sub')}
-                    </span>
-                  </div>
+                <div className="flex justify-between items-center text-[9px] tracking-[0.1em] text-brand-charcoal/50 dark:text-brand-cream/50 mt-1">
+                  <span>{t('meta_footer')}</span>
+                  <span className="flex items-center gap-1">
+                    <Sparkles size={10} className="text-brand-terracotta" /> {t('meta_sub')}
+                  </span>
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Shopping Cart Drawer */}
       <AnimatePresence>
         {cartOpen && (
-          <div className="fixed inset-0 z-55 overflow-hidden flex items-center justify-end">
+          <div className="fixed inset-0 z-[55] overflow-hidden flex items-center justify-end">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
