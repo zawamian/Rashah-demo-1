@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { ArrowDownRight, Compass } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import monolithJarHero from '../assets/images/monolith_jar_hero_1779726349623.png';
 
 interface HeroProps {
   onExploreClick: () => void;
@@ -138,7 +139,7 @@ export default function Hero({ onExploreClick }: HeroProps) {
               
               {/* Image with subtle high-end scaling hover effect */}
               <img
-                src="/src/assets/images/monolith_jar_hero_1779726349623.png"
+                src={monolithJarHero}
                 alt="Rashah Premium Artisanal Monolith Glass Jar containing Volcanic Sumac Blend"
                 className="w-full h-full object-contain transform group-hover:scale-[1.03] transition-transform duration-700 ease-out p-2"
                 referrerPolicy="no-referrer"
