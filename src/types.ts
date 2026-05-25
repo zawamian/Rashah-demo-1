@@ -59,3 +59,25 @@ export interface CartItem {
   quantity: number;
 }
 
+export type PageId = 'home' | 'collections' | 'connect' | 'recipes';
+
+export interface Recipe {
+  id: string;
+  title: string;
+  title_ar?: string;
+  title_tr?: string;
+  productId: string;
+  tag: string;
+  prepTime: string;
+  cookTime?: string;
+  servings: number;
+  ingredients: string[];
+  ingredients_ar?: string[];
+  ingredients_tr?: string[];
+  steps: string[];
+  steps_ar?: string[];
+  steps_tr?: string[];
+  note?: string;
+  note_ar?: string;
+  note_tr?: string;
+}
