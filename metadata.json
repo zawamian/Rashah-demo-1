@@ -1,0 +1,6 @@
+{
+  "name": "Rashah Artisanal",
+  "description": "Premium brand showcase for Rashah (رشة) — showcasing artisanal spices and premium granola in a modernist minimalist design system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

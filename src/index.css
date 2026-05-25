@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-brand-cream: #FDFBF7;
+  --color-brand-charcoal: #1C1C1C;
+  --color-brand-terracotta: #C94C24;
+  --color-brand-ochre: #C08036;
+}
+
+@layer base {
+  html, body {
+    background-color: var(--color-brand-cream);
+    color: var(--color-brand-charcoal);
+    font-family: var(--font-sans);
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+  
+  html.dark, html.dark body {
+    background-color: var(--color-brand-charcoal);
+    color: var(--color-brand-cream);
+  }
+  
+  h1, h2, h3, h4, .font-serif-header {
+    font-family: var(--font-serif);
+  }
+  
+  .font-mono-data {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Custom fade transitions and scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-ochre);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-terracotta);
+}
+
+/* Custom interactive classes */
+.thin-border {
+  border-color: rgba(28, 28, 28, 0.08);
+}
+.dark .thin-border {
+  border-color: rgba(253, 251, 247, 0.08);
+}
