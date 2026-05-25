@@ -1,4 +1,4 @@
-﻿import { Recipe } from '../types';
+import { Recipe } from '../types';
 
 export const recipes: Recipe[] = [
   {
@@ -58,6 +58,12 @@ export const recipes: Recipe[] = [
     note: 'Pair with cold-brew black tea or sparkling water with fresh lemon for a complete Levantine breakfast.',
     note_ar: 'اقرنيه مع الشاي الأسود المثلج أو المياه الفوارة مع الليمون الطازج لإفطار شامي كامل.',
     note_tr: 'Eksiksiz bir Levant kahvaltısı için buzlu siyah çay veya taze limonlu maden suyu ile servis edin.',
+    nutrition: {
+      calories: 290,
+      protein: 8,
+      carbs: 18,
+      fat: 21
+    },
   },
   {
     id: 'zaatar-flatbread-dip',
@@ -107,6 +113,12 @@ export const recipes: Recipe[] = [
     note: 'For a richer version, stir in a tablespoon of tahini. Best consumed fresh within the hour.',
     note_ar: 'لنسخة أغنى، أضيفي ملعقة كبيرة طحينة. يُستهلك طازجاً خلال ساعة للحصول على أفضل نكهة.',
     note_tr: 'Daha zengin bir versiyon için bir yemek kaşığı tahin ekleyin. Taze yapılmış haliyle bir saat içinde tüketilmesi önerilir.',
+    nutrition: {
+      calories: 210,
+      protein: 3,
+      carbs: 14,
+      fat: 16
+    },
   },
   {
     id: 'aleppo-pepper-fried-eggs',
@@ -163,6 +175,12 @@ export const recipes: Recipe[] = [
     note: 'The pepper blooms in residual heat — do not add it while on the flame or the delicate smoked notes will fade.',
     note_ar: 'يتفتح الفلفل في الحرارة المتبقية — لا تضيفيه أثناء النار وإلا ستتلاشى النكهات المدخنة الرقيقة.',
     note_tr: 'Biber artık ısıda açılır — alev üzerindeyken eklemeyin; aksi hâlde hassas tütsü notaları solar.',
+    nutrition: {
+      calories: 310,
+      protein: 15,
+      carbs: 16,
+      fat: 19
+    },
   },
   {
     id: 'cardamom-rose-granola-bowl',
@@ -218,6 +236,12 @@ export const recipes: Recipe[] = [
     note: 'Best consumed within minutes of assembly — granola retains its signature crunch before the yogurt softens it.',
     note_ar: 'يُستهلك في غضون دقائق من التحضير — تحتفظ الجرانولا بقرمشتها المميزة قبل أن يليّنها الزبادي.',
     note_tr: 'Hazırlandıktan dakikalar içinde tüketilmesi en iyisidir — yoğurt yumuşatmadan önce granola imza çıtırtısını korur.',
+    nutrition: {
+      calories: 420,
+      protein: 11,
+      carbs: 48,
+      fat: 22
+    },
   },
   {
     id: 'black-lime-seafood-risotto',
@@ -294,6 +318,12 @@ export const recipes: Recipe[] = [
     ],
     note: 'The Loomi powder adds fermented citrus depth that replaces the need for extra acid. Resist squeezing additional lemon unless the dish needs lifting at the very end.',
     note_ar: 'تضيف بودرة اللومي عمقاً حمضياً مخمراً يغني عن الحاجة لأي حموضة إضافية. تجنبي عصر الليمون إلا إذا احتاج الطبق لإيقاظ نكهته في النهاية.',
-    note_tr: 'Loomi tozu, ekstra aside olan ihtiyacı ortadan kaldıran fermente narenciye derinliği sağlar. En sonda yemeğin canlandırılması gerekmediği sürece ekstra limon sıkmaktan kaçının.',
+    note_tr: 'Loomi tozu, ekstra aside olan ihtiyacı ortadan kaldıran fermente narenciye derinliği sağlar. En sonda yemeğin canlandırılması gerekmediği sürece ekstra limon sıkmaktan kauın.',
+    nutrition: {
+      calories: 540,
+      protein: 28,
+      carbs: 72,
+      fat: 14
+    },
   },
 ];

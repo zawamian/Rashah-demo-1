@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
-import { useLanguage, Language } from '../context/LanguageContext';
+import { useLanguage, Language, useProductTranslation } from '../context/LanguageContext';
 import { Menu, X, Sun, Moon, Sparkles, ShoppingBag, Trash2, Plus, Minus, ArrowRight, Check } from 'lucide-react';
 import { CartItem, PageId } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
@@ -26,6 +26,7 @@ export default function Header({
 }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
   const { language, setLanguage, t, dir } = useLanguage();
+  const translateProduct = useProductTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutSimulated, setCheckoutSimulated] = useState(false);
@@ -365,84 +366,144 @@ export default function Header({
                         </button>
                       </div>
                     ) : (
-                      <div className="flex flex-col gap-4 max-h-[55vh] overflow-y-auto pr-1">
-                        {cartItems.map((item) => (
-                          <div 
-                            key={item.product.id}
-                            className="flex items-center justify-between gap-4 p-3 border border-brand-charcoal/5 dark:border-brand-cream/5 bg-white/40 dark:bg-brand-charcoal/30 text-left"
-                          >
-                            {/* Left thumb */}
-                            <div className="h-14 w-14 bg-white dark:bg-brand-charcoal/50 rounded p-1 flex items-center justify-center overflow-hidden border border-brand-charcoal/5">
-                              <img 
-                                src={item.product.image} 
-                                alt={item.product.title} 
-                                className="object-contain h-full w-full"
-                                referrerPolicy="no-referrer"
-                              />
-                            </div>
-
-                            {/* Center descriptor */}
-                            <div className="flex-1 min-w-0">
-                              <div className="flex justify-between items-baseline mb-0.5">
-                                <h4 className="font-serif text-sm font-bold text-brand-charcoal dark:text-brand-cream truncate pr-2">
-                                  {item.product.title}
-                                </h4>
-                                <span className="font-mono-data text-xs text-brand-charcoal/70 dark:text-brand-cream/70 whitespace-nowrap">
-                                  ${item.product.price * item.quantity}.00
-                                </span>
-                              </div>
-                              <span className="text-[8px] tracking-[0.2em] font-mono-data text-brand-ochre uppercase font-bold block mb-1">
-                                {item.product.weight}
-                              </span>
-
-                              {/* Quantity Control block */}
-                              <div className="flex items-center gap-3 mt-1.5">
-                                <div className="flex items-center border border-brand-charcoal/10 dark:border-brand-cream/10">
-                                  <button
-                                    id={`qty-minus-${item.product.id}`}
-                                    onClick={() => updateQuantity(item.product.id, -1)}
-                                    className="p-1 text-brand-charcoal/60 dark:text-brand-cream/60 hover:text-brand-terracotta cursor-pointer"
-                                  >
-                                    <Minus size={10} />
-                                  </button>
-                                  <span className="px-2 font-mono-data text-xs font-bold text-brand-charcoal dark:text-brand-cream">
-                                    {item.quantity}
-                                  </span>
-                                  <button
-                                    id={`qty-plus-${item.product.id}`}
-                                    onClick={() => updateQuantity(item.product.id, 1)}
-                                    className="p-1 text-brand-charcoal/60 dark:text-brand-cream/60 hover:text-brand-terracotta cursor-pointer"
-                                  >
-                                    <Plus size={10} />
-                                  </button>
+                      <div className="flex flex-col gap-4 max-h-[50vh] overflow-y-auto pr-1">
+                        <AnimatePresence initial={false}>
+                          {cartItems.map((item) => {
+                            const translatedProduct = translateProduct(item.product);
+                            return (
+                              <motion.div 
+                                key={item.product.id}
+                                layout
+                                initial={{ opacity: 0, y: 12, scale: 0.97 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, x: dir === 'rtl' ? 40 : -40, height: 0, padding: 0, marginTop: 0, marginBottom: 0, border: 0 }}
+                                transition={{ 
+                                  type: 'spring',
+                                  stiffness: 300,
+                                  damping: 25,
+                                  layout: { duration: 0.25 }
+                                }}
+                                className={`flex items-center justify-between gap-4 p-3 border border-brand-charcoal/5 dark:border-brand-cream/5 bg-white/40 dark:bg-brand-charcoal/30 text-left rounded-sm group transition-all duration-300 hover:border-brand-terracotta/25 overflow-hidden ${dir === 'rtl' ? 'flex-row-reverse text-right' : 'text-left'}`}
+                              >
+                                {/* Left thumb — elegant, larger aspect container with a micro hover zoom transition */}
+                                <div className="h-16 w-16 sm:h-20 sm:w-20 bg-brand-cream dark:bg-brand-charcoal/50 p-1 flex items-center justify-center overflow-hidden border border-brand-charcoal/10 dark:border-brand-cream/10 shrink-0 relative group rounded-sm select-none">
+                                  <img 
+                                    src={item.product.image} 
+                                    alt={translatedProduct?.title ?? item.product.title} 
+                                    className="object-contain h-full w-full group-hover:scale-110 transition-transform duration-500"
+                                    referrerPolicy="no-referrer"
+                                  />
+                                  <div className="absolute bottom-1 right-1 bg-brand-charcoal/80 dark:bg-brand-cream/80 text-brand-cream dark:text-brand-charcoal text-[7px] font-mono-data font-extrabold px-1 py-0.5 tracking-wider uppercase rounded-xs">
+                                    ×{item.quantity}
+                                  </div>
                                 </div>
 
-                                <button
-                                  id={`remove-item-${item.product.id}`}
-                                  onClick={() => removeFromCart(item.product.id)}
-                                  className="text-[9px] font-mono-data text-brand-charcoal/40 dark:text-brand-cream/40 hover:text-brand-terracotta flex items-center gap-1 transition-colors duration-200 cursor-pointer"
-                                  title="Delete item"
-                                >
-                                  <Trash2 size={10} /> {removeLabel}
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
+                                {/* Center descriptor */}
+                                <div className="flex-1 min-w-0">
+                                  <div className={`flex justify-between items-baseline mb-0.5 gap-2 ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
+                                    <h4 className="font-serif text-sm font-bold text-brand-charcoal dark:text-brand-cream truncate pr-1">
+                                      {translatedProduct?.title ?? item.product.title}
+                                    </h4>
+                                    <span className="font-mono-data text-xs font-bold text-brand-charcoal dark:text-brand-cream whitespace-nowrap">
+                                      ${item.product.price * item.quantity}.00
+                                    </span>
+                                  </div>
+                                  <span className={`text-[8px] tracking-[0.2em] font-mono-data text-brand-ochre uppercase font-bold block mb-1.5 ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
+                                    {item.product.weight}
+                                  </span>
+
+                                  {/* Quantity Control block */}
+                                  <div className={`flex items-center gap-3 mt-1.5 ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
+                                    <div className="flex items-center border border-brand-charcoal/10 dark:border-brand-cream/10 bg-brand-cream/20 dark:bg-black/15 rounded-xs">
+                                      <button
+                                        id={`qty-minus-${item.product.id}`}
+                                        onClick={() => updateQuantity(item.product.id, -1)}
+                                        className="p-1 px-2 text-brand-charcoal/60 dark:text-brand-cream/60 hover:text-brand-terracotta cursor-pointer"
+                                        aria-label={`Decrease ${item.product.title}`}
+                                      >
+                                        <Minus size={9} />
+                                      </button>
+                                      <span className="px-1 font-mono-data text-xs font-bold text-brand-charcoal dark:text-brand-cream select-none">
+                                        {item.quantity}
+                                      </span>
+                                      <button
+                                        id={`qty-plus-${item.product.id}`}
+                                        onClick={() => updateQuantity(item.product.id, 1)}
+                                        className="p-1 px-2 text-brand-charcoal/60 dark:text-brand-cream/60 hover:text-brand-terracotta cursor-pointer"
+                                        aria-label={`Increase ${item.product.title}`}
+                                      >
+                                        <Plus size={9} />
+                                      </button>
+                                    </div>
+
+                                    <button
+                                      id={`remove-item-${item.product.id}`}
+                                      onClick={() => removeFromCart(item.product.id)}
+                                      className="text-[8px] font-mono-data font-bold tracking-wider text-brand-charcoal/40 dark:text-brand-cream/40 hover:text-brand-terracotta flex items-center gap-1 transition-colors duration-200 cursor-pointer uppercase py-1"
+                                      title="Delete item"
+                                    >
+                                      <Trash2 size={9} className="text-brand-terracotta/60" /> {removeLabel}
+                                    </button>
+                                  </div>
+                                </div>
+                              </motion.div>
+                            );
+                          })}
+                        </AnimatePresence>
                       </div>
                     )}
                   </>
                 )}
               </div>
 
-              {/* Footer pricing segment */}
+              {/* Footer pricing segment — incorporating a state-of-the-art comprehensive, elegant summary box */}
               {!checkoutSimulated && cartItems.length > 0 && (
                 <div className="border-t border-brand-charcoal/10 dark:border-brand-cream/10 pt-6 mt-6">
-                  <div className={`flex justify-between items-baseline mb-4 ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
-                    <span className="text-[10px] tracking-widest text-brand-charcoal/40 dark:text-brand-cream/40 uppercase font-mono-data">{t('valuation')}</span>
-                    <span className="font-mono-data text-xl font-bold text-brand-charcoal dark:text-brand-cream">
-                      ${totalPrice}.00 USD
-                    </span>
+                  
+                  {/* Detailed Minimalist Summary Card aligned to the brand aesthetic */}
+                  <div className="bg-brand-charcoal/5 dark:bg-brand-cream/5 border border-brand-charcoal/10 dark:border-brand-cream/10 p-4 mb-4 font-mono-data text-[10px] tracking-widest uppercase space-y-2.5 rounded-sm">
+                    {/* Item count row */}
+                    <div className={`flex justify-between items-center ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
+                      <span className="text-brand-charcoal/50 dark:text-brand-cream/50">
+                        {language === 'ar' ? 'مجموع القطع في السلة' : (language === 'tr' ? 'toplam miktar' : 'item count')}
+                      </span>
+                      <span className="font-bold text-brand-charcoal dark:text-brand-cream">
+                        {totalItemsCount} {totalItemsCount === 1 ? (language === 'ar' ? 'قطعة' : (language === 'tr' ? 'ürün' : 'item')) : (language === 'ar' ? 'قطع' : (language === 'tr' ? 'ürün' : 'items'))}
+                      </span>
+                    </div>
+
+                    {/* Subtotal row */}
+                    <div className={`flex justify-between items-center ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
+                      <span className="text-brand-charcoal/50 dark:text-brand-cream/50">
+                        {language === 'ar' ? 'المجموع الفرعي' : (language === 'tr' ? 'ara toplam' : 'subtotal')}
+                      </span>
+                      <span className="font-bold text-brand-charcoal dark:text-brand-cream">
+                        ${totalPrice}.00 USD
+                      </span>
+                    </div>
+
+                    {/* Shipping Row */}
+                    <div className={`flex justify-between items-center ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
+                      <span className="text-brand-charcoal/50 dark:text-brand-cream/50">
+                        {language === 'ar' ? 'خيارات الشحن والتوصيل' : (language === 'tr' ? 'sevkiyat bedeli' : 'shipping')}
+                      </span>
+                      <span className="text-brand-terracotta font-extrabold text-[8px] bg-brand-terracotta/5 px-1.5 py-0.5 border border-brand-terracotta/10 rounded-xs">
+                        {language === 'ar' ? 'مـجـانـي' : (language === 'tr' ? 'ÜCRETSİZ' : 'COMPLIMENTARY')}
+                      </span>
+                    </div>
+
+                    {/* Decorative Dotted Separator */}
+                    <div className="border-t border-dotted border-brand-charcoal/25 dark:border-brand-cream/25 my-1" />
+
+                    {/* Grand Total Row */}
+                    <div className={`flex justify-between items-baseline pt-0.5 ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
+                      <span className="font-serif text-xs font-bold text-brand-charcoal dark:text-brand-cream lowercase">
+                        {language === 'ar' ? 'المجموع الإجمالي' : (language === 'tr' ? 'genel toplam' : 'grand total')}
+                      </span>
+                      <span className="text-base sm:text-lg font-bold text-brand-charotta text-brand-terracotta">
+                        ${totalPrice}.00 USD
+                      </span>
+                    </div>
                   </div>
 
                   <p className="text-[9px] text-brand-charcoal/50 dark:text-brand-cream/50 mb-4 leading-relaxed font-sans text-justify">
@@ -453,14 +514,14 @@ export default function Header({
                     <button
                       id="clear-cart-btn"
                       onClick={clearCart}
-                      className="px-4 py-4 border border-brand-charcoal/15 dark:border-brand-cream/15 text-brand-charcoal/60 dark:text-brand-cream/60 hover:text-brand-terracotta hover:border-brand-terracotta text-xs tracking-widest font-semibold cursor-pointer transition-colors duration-200"
+                      className="px-4 py-4 border border-brand-charcoal/15 dark:border-brand-cream/15 text-brand-charcoal/60 dark:text-brand-cream/60 hover:text-brand-terracotta hover:border-brand-terracotta text-xs tracking-widest font-semibold cursor-pointer transition-colors duration-200 rounded-sm"
                     >
                       {t('clear_everything')}
                     </button>
                     <button
                       id="simulate-checkout-btn"
                       onClick={handleSimulateCheckout}
-                      className="flex-1 bg-brand-charcoal dark:bg-brand-cream text-brand-cream dark:text-brand-charcoal hover:bg-brand-terracotta dark:hover:bg-brand-terracotta hover:text-brand-cream dark:hover:text-brand-cream font-semibold py-4 text-center text-xs tracking-widest uppercase transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5"
+                      className="flex-1 bg-brand-charcoal dark:bg-brand-cream text-brand-cream dark:text-brand-charcoal hover:bg-brand-terracotta dark:hover:bg-brand-terracotta hover:text-brand-cream dark:hover:text-brand-cream font-semibold py-4 text-center text-xs tracking-widest uppercase transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 rounded-sm"
                     >
                       {t('proceed_to_secure')} <ArrowRight size={12} className={dir === 'rtl' ? 'rotate-180' : ''} />
                     </button>

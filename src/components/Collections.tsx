@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProductsApi } from '../data/products';
 import { Product, ProductCategory, CartItem } from '../types';
@@ -15,12 +15,145 @@ interface CollectionsProps {
   cartItems: CartItem[];
 }
 
+export interface Review {
+  id: string;
+  name: string;
+  rating: number;
+  comment: string;
+  date: string;
+  designation?: string;
+}
+
 export default function Collections({ selectedCategory, setSelectedCategory, addToCart, cartItems }: CollectionsProps) {
-  const { t, language } = useLanguage();
+  const { t, language, dir } = useLanguage();
   const translateProduct = useProductTranslation();
 
   const [selectedProductRaw, setSelectedProductRaw] = useState<Product | null>(null);
   const [quickViewProductRaw, setQuickViewProductRaw] = useState<Product | null>(null);
+
+  // Localized Star Ratings and Reviews States with Persistence
+  const [localRatings, setLocalRatings] = useState<Record<string, { stars: number; count: number }>>(() => {
+    try {
+      const saved = localStorage.getItem('rashah-product-ratings');
+      return saved ? JSON.parse(saved) : productRatings;
+    } catch (e) {
+      return productRatings;
+    }
+  });
+
+  const [productReviews, setProductReviews] = useState<Record<string, Review[]>>(() => {
+    try {
+      const saved = localStorage.getItem('rashah-product-reviews');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+
+    // Prepopulate 2 beautiful custom reviews for each product matching the theme
+    return {
+      'rashah-signature-blend': [
+        {
+          id: 'v1',
+          name: 'Sultan A. Al-Saud',
+          rating: 5,
+          comment: 'Perfect coarse rub. The volc sumac carries a sharp berry aroma that bursts on warm labneh. Genuinely beautiful presentation in Riyadh.',
+          date: 'May 14, 2526',
+          designation: 'Certified Buyer, Riyadh KSA'
+        },
+        {
+          id: 'v2',
+          name: 'Clara G.',
+          rating: 5,
+          comment: 'Exceptional citric notes. Sourced high-heritage. A staple in my culinary styling.',
+          date: 'May 06, 2026',
+          designation: 'Food Stylist, London UK'
+        }
+      ],
+      'cardamom-rose-pecan-granola': [
+        {
+          id: 'v3',
+          name: 'Yasmine B.',
+          rating: 5,
+          comment: 'Outstanding fragrance. The baked rosebuds are delightful with Greek yogurt. Best granola I’ve tasted in the Middle East.',
+          date: 'May 20, 2026',
+          designation: 'Gourmet Enthusiast, Dubai UAE'
+        },
+        {
+          id: 'v4',
+          name: 'Marcus L.',
+          rating: 5,
+          comment: 'The pecan clusters are perfectly crisp. Not overly sweet, balanced with maple saltiness.',
+          date: 'May 11, 2026',
+          designation: 'Chef, New York USA'
+        }
+      ],
+      'zaatar-premium-artisanal': [
+        {
+          id: 'v5',
+          name: 'Nour Al-Hassan',
+          rating: 5,
+          comment: 'This is authentic shade-dried wild thyme. Coarse textures are alive. Highly authenticated product.',
+          date: 'May 18, 2026',
+          designation: 'Gastronomist, Amman Jordan'
+        }
+      ],
+      'classic-toasted-maple-granola': [
+        {
+          id: 'v6',
+          name: 'Thomas M.',
+          rating: 4,
+          comment: 'Subtle slow-baked maple. Exceptional crunch. Extremely versatile morning breakfast base.',
+          date: 'May 22, 2026',
+          designation: 'Hospitality Partner, Al-Ula'
+        }
+      ],
+      'aleppo-smoked-pepper-flakes': [
+        {
+          id: 'v7',
+          name: 'Melis K.',
+          rating: 5,
+          comment: 'Volcanic and smoked. Beautifully sweet yet rich spicy warmth. Essential for poached eggs.',
+          date: 'May 21, 2026',
+          designation: 'Food Blogger, Istanbul Turkey'
+        }
+      ],
+      'salted-ochre-sesame-granola': [
+        {
+          id: 'v8',
+          name: 'Fahad Al-Saif',
+          rating: 5,
+          comment: 'Raw tahini base adds a deep savory dimension. Robust texture that never gets soggy. Incredibly creative.',
+          date: 'May 10, 2026',
+          designation: 'Fine Merchant, Al-Khobar'
+        }
+      ],
+      'loomi-fermented-black-lime': [
+        {
+          id: 'v9',
+          name: 'Marcus V.',
+          rating: 5,
+          comment: 'Loomi is outstanding. Handcrushed, deep fermented. Gives grilled seabass and broths an absolute, citric kick.',
+          date: 'May 08, 2026',
+          designation: 'Masterchef Consultant, Rome Italy'
+        }
+      ]
+    };
+  });
+
+  // Review Submissions Form States
+  const [formRating, setFormRating] = useState<number>(5);
+  const [formName, setFormName] = useState<string>('');
+  const [formTitle, setFormTitle] = useState<string>('');
+  const [formComment, setFormComment] = useState<string>('');
+  const [showReviewForm, setShowReviewForm] = useState<boolean>(false);
+  const [formSubmittedSuccessfully, setFormSubmittedSuccessfully] = useState<boolean>(false);
+
+  // Synchronise ratings/reviews to local storage
+  useEffect(() => {
+    localStorage.setItem('rashah-product-ratings', JSON.stringify(localRatings));
+  }, [localRatings]);
+
+  useEffect(() => {
+    localStorage.setItem('rashah-product-reviews', JSON.stringify(productReviews));
+  }, [productReviews]);
   
   const [wishlist, setWishlist] = useState<string[]>(() => {
     try {
@@ -198,19 +331,22 @@ export default function Collections({ selectedCategory, setSelectedCategory, add
                     </span>
 
                     {/* Star rating */}
-                    {productRatings[product.id] && (
+                    {localRatings[product.id] && (
                       <div className="flex items-center gap-1.5 mb-3">
                         <div className="flex items-center gap-0.5">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <Star
-                              key={star}
-                              size={10}
-                              className="fill-brand-terracotta text-brand-terracotta"
-                            />
-                          ))}
+                          {[1, 2, 3, 4, 5].map((star) => {
+                            const currentStars = localRatings[product.id]?.stars ?? 5.0;
+                            return (
+                              <Star
+                                key={star}
+                                size={10}
+                                className={star <= Math.round(currentStars) ? 'fill-brand-terracotta text-brand-terracotta border-0' : 'text-brand-charcoal/20 dark:text-brand-cream/20'}
+                              />
+                            );
+                          })}
                         </div>
                         <span className="font-mono-data text-[9px] text-brand-charcoal/50 dark:text-brand-cream/50 tracking-wide">
-                          {productRatings[product.id].stars.toFixed(1)} · {productRatings[product.id].count} reviews
+                          {localRatings[product.id].stars.toFixed(1)} · {localRatings[product.id].count} reviews
                         </span>
                       </div>
                     )}
@@ -365,6 +501,250 @@ export default function Collections({ selectedCategory, setSelectedCategory, add
                     <p className="text-xs text-brand-charcoal/70 dark:text-brand-cream/70 leading-relaxed font-sans text-justify">
                       {selectedProduct.notes}
                     </p>
+                  </div>
+
+                  {/* Customer Reviews Section */}
+                  <div className="border-t border-brand-charcoal/10 dark:border-brand-cream/10 pt-8 mt-8 text-left">
+                    <span className="font-mono-data text-[10px] tracking-widest text-brand-ochre font-extrabold uppercase block mb-4">
+                      {language === 'ar' ? 'آراء وتجربة العملاء' : (language === 'tr' ? 'MÜŞTERİ DEĞERLENDİRMELERİ' : 'CUSTOMER TESTIMONIALS & REVIEWS')}
+                    </span>
+                    
+                    {/* Summary row */}
+                    <div className="flex items-center gap-5 mb-6 flex-wrap">
+                      <div className="text-center bg-brand-charcoal/5 dark:bg-brand-cream/5 px-4 py-3 rounded border border-brand-charcoal/5">
+                        <div className="font-serif text-3xl font-bold text-brand-charcoal dark:text-brand-cream">
+                          {(localRatings[selectedProduct.id]?.stars ?? 5.0).toFixed(1)}
+                        </div>
+                        <div className="flex justify-center gap-0.5 my-1">
+                          {[1, 2, 3, 4, 5].map((star) => {
+                            const currentStars = localRatings[selectedProduct.id]?.stars ?? 5.0;
+                            return (
+                              <Star
+                                key={star}
+                                size={11}
+                                className={star <= Math.round(currentStars) ? 'fill-brand-terracotta text-brand-terracotta border-0' : 'text-brand-charcoal/20 dark:text-brand-cream/20'}
+                              />
+                            );
+                          })}
+                        </div>
+                        <span className="font-mono-data text-[9px] text-brand-charcoal/40 dark:text-brand-cream/40 uppercase">
+                          {localRatings[selectedProduct.id]?.count ?? 0} {language === 'ar' ? 'تقييم' : (language === 'tr' ? 'Yorum' : 'Reviews')}
+                        </span>
+                      </div>
+                      
+                      {/* Write a review button toggle */}
+                      <button
+                        onClick={() => {
+                          setShowReviewForm(!showReviewForm);
+                          setFormSubmittedSuccessfully(false);
+                        }}
+                        className="px-4 py-2.5 bg-brand-terracotta/10 hover:bg-brand-terracotta text-brand-terracotta hover:text-brand-cream text-[9px] tracking-[0.2em] font-bold font-mono-data uppercase cursor-pointer transition-all duration-300 border border-brand-terracotta/20 rounded-md"
+                      >
+                        {showReviewForm 
+                          ? (language === 'ar' ? 'إغلاق نافذة التقييم' : (language === 'tr' ? 'KAPAT' : 'CLOSE FORM'))
+                          : (language === 'ar' ? 'أضف تقييمك الخاص' : (language === 'tr' ? 'YORUM YAZ' : 'WRITE A REVIEW'))}
+                      </button>
+                    </div>
+
+                    {/* Collapsing Review Form */}
+                    <AnimatePresence>
+                      {showReviewForm && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="overflow-hidden mb-6 p-4 bg-brand-charcoal/5 dark:bg-brand-cream/5 border border-brand-charcoal/10 rounded"
+                        >
+                          {formSubmittedSuccessfully ? (
+                            <div className="py-4 text-center">
+                              <span className="text-brand-terracotta font-serif italic text-sm font-semibold block mb-1">
+                                {language === 'ar' ? 'تم تسجيل تقييمك بنجاح!' : (language === 'tr' ? 'Değerlendirmeniz için teşekkürler!' : 'Thank you for your response!')}
+                              </span>
+                              <p className="text-xs text-brand-charcoal/50 dark:text-brand-cream/50 leading-relaxed max-w-sm mx-auto">
+                                {language === 'ar' ? 'يسعدنا مشاركتك لتجربة رشة الفريدة لتدشين الثقافة والمذاق الأصيل.' : (language === 'tr' ? 'Görüşleriniz en kısa sürede ürün değerlendirme ortalamasına yansıtılmıştır.' : 'Your typographic review has been incorporated dynamically into our running totals.')}
+                              </p>
+                            </div>
+                          ) : (
+                            <form 
+                              onSubmit={(e) => {
+                                e.preventDefault();
+                                if (!formName.trim() || !formComment.trim()) return;
+
+                                // Custom arithmetic to dynamically scale average stars based on the new review
+                                const currentRating = localRatings[selectedProduct.id] || { stars: 5.0, count: 12 };
+                                const newReviewCount = currentRating.count + 1;
+                                const newStarsAvg = ((currentRating.stars * currentRating.count) + formRating) / newReviewCount;
+
+                                // Update localStorage-bound ratings state
+                                setLocalRatings(prev => ({
+                                  ...prev,
+                                  [selectedProduct.id]: { stars: newStarsAvg, count: newReviewCount }
+                                }));
+
+                                // Append the review into local reviews list
+                                const newReview: Review = {
+                                  id: `user-rev-${Date.now()}`,
+                                  name: formName,
+                                  rating: formRating,
+                                  comment: formComment,
+                                  date: new Date().toLocaleDateString(language === 'ar' ? 'ar-EG' : (language === 'tr' ? 'tr-TR' : 'en-US'), {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                  }),
+                                  designation: formTitle.trim() ? formTitle : (language === 'ar' ? 'مشترٍ معتمد' : (language === 'tr' ? 'Onaylı Alıcı' : 'Verified Buyer'))
+                                };
+
+                                setProductReviews(prev => ({
+                                  ...prev,
+                                  [selectedProduct.id]: [newReview, ...(prev[selectedProduct.id] || [])]
+                                }));
+
+                                // Clear forms
+                                setFormName('');
+                                setFormTitle('');
+                                setFormComment('');
+                                setFormRating(5);
+                                setFormSubmittedSuccessfully(true);
+                              }}
+                              className="space-y-3"
+                            >
+                              {/* Standard interactive star row */}
+                              <div>
+                                <label className="block text-[8px] text-brand-charcoal/50 dark:text-brand-cream/50 font-bold tracking-widest uppercase mb-1">
+                                  {language === 'ar' ? 'التقييم بالنجوم *' : (language === 'tr' ? 'PUANINIZ *' : 'RATING STARS *')}
+                                </label>
+                                <div className="flex gap-1">
+                                  {[1, 2, 3, 4, 5].map((star) => (
+                                    <button
+                                      type="button"
+                                      key={star}
+                                      onClick={() => setFormRating(star)}
+                                      className="text-brand-terracotta hover:scale-110 transition-transform cursor-pointer focus:outline-none"
+                                    >
+                                      <Star
+                                        size={18}
+                                        className={star <= formRating ? 'fill-brand-terracotta text-brand-terracotta border-0' : 'text-brand-charcoal/20 dark:text-brand-cream/20'}
+                                      />
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Form identity rows */}
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                  <label className="block text-[8px] text-brand-charcoal/50 dark:text-brand-cream/50 font-bold tracking-widest uppercase mb-1">
+                                    {language === 'ar' ? 'الاسم بالكامل *' : (language === 'tr' ? 'ADINIZ *' : 'IDENTITY NAME *')}
+                                  </label>
+                                  <input
+                                    type="text"
+                                    required
+                                    value={formName}
+                                    onChange={(e) => setFormName(e.target.value)}
+                                    placeholder={language === 'ar' ? 'مثال: فيصل الحربي' : (language === 'tr' ? 'Örn: Ahmet Yılmaz' : 'e.g., Sultan Al-Saif')}
+                                    className="w-full text-xs px-3 py-2 bg-brand-cream dark:bg-brand-charcoal border border-brand-charcoal/10 placeholder-brand-charcoal/35 dark:placeholder-brand-cream/35 text-brand-charcoal dark:text-brand-cream outline-none focus:border-brand-terracotta transition-colors rounded"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="block text-[8px] text-brand-charcoal/50 dark:text-brand-cream/50 font-bold tracking-widest uppercase mb-1">
+                                    {language === 'ar' ? 'المدينة أو الصفة' : (language === 'tr' ? 'UNVAN / ŞEHİR' : 'LOCATION / DESIGNATION')}
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={formTitle}
+                                    onChange={(e) => setFormTitle(e.target.value)}
+                                    placeholder={language === 'ar' ? 'مثال: الرياض، طاهٍ هاوٍ' : (language === 'tr' ? 'Örn: İstanbul, Ev Aşçısı' : 'e.g., Riyadh, Culinary Hobbyist')}
+                                    className="w-full text-xs px-3 py-2 bg-brand-cream dark:bg-brand-charcoal border border-brand-charcoal/10 placeholder-brand-charcoal/35 dark:placeholder-brand-cream/35 text-brand-charcoal dark:text-brand-cream outline-none focus:border-brand-terracotta transition-colors rounded"
+                                  />
+                                </div>
+                              </div>
+
+                              {/* Text comments */}
+                              <div>
+                                <label className="block text-[8px] text-brand-charcoal/50 dark:text-brand-cream/50 font-bold tracking-widest uppercase mb-1">
+                                  {language === 'ar' ? 'رأيك الشخصي بالتفصيل *' : (language === 'tr' ? 'DEĞERLENDİRME DETAYI *' : 'TYPOGRAPHIC TESTIMONIAL *')}
+                                </label>
+                                <textarea
+                                  required
+                                  rows={3}
+                                  value={formComment}
+                                  onChange={(e) => setFormComment(e.target.value)}
+                                  placeholder={language === 'ar' ? 'اكتب انطباعك بصدق عن القرمشة، الرائحة، ومستوى الملوحة والبهارات...' : (language === 'tr' ? 'Çıtır pürüz, aromatik koku ve tuz dengesini tarif edin...' : 'Describe crunch density, sensory burst, or how you paired it...')}
+                                  className="w-full text-xs px-3 py-2 bg-brand-cream dark:bg-brand-charcoal border border-brand-charcoal/10 placeholder-brand-charcoal/35 dark:placeholder-brand-cream/35 text-brand-charcoal dark:text-brand-cream outline-none focus:border-brand-terracotta transition-colors rounded resize-none"
+                                />
+                              </div>
+
+                              {/* Submit dispatch button */}
+                              <button
+                                type="submit"
+                                className="w-full py-2 bg-brand-terracotta text-brand-cream hover:bg-brand-charcoal focus:bg-brand-charcoal text-[9px] font-mono-data font-bold tracking-widest uppercase transition-colors max-w-[170px] cursor-pointer"
+                              >
+                                {language === 'ar' ? 'إرسال التقييم' : (language === 'tr' ? 'DEĞERLENDİR' : 'SUBMIT TESTIMONIAL')}
+                              </button>
+                            </form>
+                          )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Scrollable list of Reviews */}
+                    <div className="space-y-4 max-h-96 overflow-y-auto pr-1">
+                      {(!productReviews[selectedProduct.id] || productReviews[selectedProduct.id].length === 0) ? (
+                        <p className="font-serif italic text-xs text-brand-charcoal/40 dark:text-brand-cream/40 py-4 text-justify">
+                          {language === 'ar' 
+                            ? 'لا توجد تقييمات مسجلة بعد. كن أول من يكتب رأيه حول هذا المنتج الفريد!' 
+                            : (language === 'tr' 
+                              ? 'Henüz yorum yazılmamış. Bu gurme ürün hakkında ilk değerlendiren siz olun!' 
+                              : 'No written reviews yet. Be the first to express your palate thoughts!')}
+                        </p>
+                      ) : (
+                        productReviews[selectedProduct.id].map((review) => {
+                          const initials = review.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                          return (
+                            <div 
+                              key={review.id} 
+                              className={`p-4 border border-brand-charcoal/5 dark:border-brand-cream/5 bg-brand-cream/20 dark:bg-[#141414] rounded flex gap-3 ${dir === 'rtl' ? 'flex-row-reverse text-right' : 'text-left'}`}
+                            >
+                              {/* Beautiful initials avatar wrapper */}
+                              <div className="w-8 h-8 rounded-full bg-brand-ochre/15 text-brand-ochre font-serif text-xs font-bold font-mono-data flex items-center justify-center shrink-0 select-none">
+                                {initials || 'R'}
+                              </div>
+                              
+                              <div className="flex-grow">
+                                <div className="flex justify-between items-baseline gap-2 flex-wrap">
+                                  <strong className="text-xs font-bold text-brand-charcoal dark:text-brand-cream">{review.name}</strong>
+                                  <span className="font-mono-data text-[9px] text-[#27ae60] font-bold tracking-wider uppercase flex items-center gap-0.5 select-none">
+                                    ✦ {language === 'ar' ? 'حساب موثق' : (language === 'tr' ? 'Onaylı Müşteri' : 'Verified Client')}
+                                  </span>
+                                </div>
+                                
+                                {review.designation && (
+                                  <span className="block text-[9px] text-brand-charcoal/40 dark:text-brand-cream/40 font-mono-data uppercase mb-1">
+                                    {review.designation} · {review.date}
+                                  </span>
+                                )}
+
+                                {/* Card stars display */}
+                                <div className={`flex gap-0.5 mb-2 ${dir === 'rtl' ? 'justify-end flex-row-reverse' : 'justify-start'}`}>
+                                  {[1, 2, 3, 4, 5].map((star) => (
+                                    <Star
+                                      key={star}
+                                      size={8}
+                                      className={star <= review.rating ? 'fill-brand-terracotta text-brand-terracotta border-0' : 'text-brand-charcoal/10 dark:text-brand-cream/10'}
+                                    />
+                                  ))}
+                                </div>
+
+                                <p className="text-xs text-[#555] dark:text-brand-cream/80 leading-relaxed font-sans text-justify">
+                                  {review.comment}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
                   </div>
 
                 </div>

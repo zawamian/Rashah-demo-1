@@ -61,6 +61,13 @@ export interface CartItem {
 
 export type PageId = 'home' | 'collections' | 'connect' | 'recipes';
 
+export interface NutritionFacts {
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+}
+
 export interface Recipe {
   id: string;
   title: string;
@@ -80,4 +87,5 @@ export interface Recipe {
   note?: string;
   note_ar?: string;
   note_tr?: string;
+  nutrition?: NutritionFacts;
 }
