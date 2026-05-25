@@ -163,6 +163,8 @@ const TRANSLATIONS = {
     sensory_sweetness: "Sweet Raisin/Honey undertone",
     herbaceous_notes: "HERBACEOUS NOTES",
     recommended_pairings: "RECOMMENDED PAIRINGS",
+    testimonials_label: "FROM OUR COMMUNITY",
+    testimonials_heading: "Trusted by discerning kitchens worldwide.",
   },
   ar: {
     // Brand & Header
@@ -324,6 +326,8 @@ const TRANSLATIONS = {
     sensory_sweetness: "حلاوة الزبيب وعسل السدر الرقيقة",
     herbaceous_notes: "العناصر والخصائص العطرية:",
     recommended_pairings: "الاقترانات وتوصيات التقديم المتناغمة:",
+    testimonials_label: "من مجتمعنا",
+    testimonials_heading: "موثوق به في مطابخ الذواقة حول العالم.",
   },
   tr: {
     // Brand & Header
@@ -485,6 +489,8 @@ const TRANSLATIONS = {
     sensory_sweetness: "Tatlı Üzüm/Bal Alt Tonu",
     herbaceous_notes: "OTSU NOTALAR",
     recommended_pairings: "ÖNERİLEN EŞLEŞMELER",
+    testimonials_label: "TOPLULUĞUMUZDAN",
+    testimonials_heading: "Dünyanın dört bir yanındaki seçkin mutfakların tercihi.",
   }
 } as const;
 

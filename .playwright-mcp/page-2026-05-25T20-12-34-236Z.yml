@@ -1,0 +1,195 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - banner [ref=e5]:
+      - generic [ref=e6]:
+        - button "RASHAH ARTISANAL SPICE & GRAIN رشة" [ref=e7] [cursor=pointer]:
+          - generic [ref=e8]:
+            - generic [ref=e9]: RASHAH
+            - generic [ref=e10]: ARTISANAL SPICE & GRAIN
+          - generic [ref=e11]: رشة
+        - navigation [ref=e12]:
+          - button "THE JOURNAL (HOME)" [ref=e13] [cursor=pointer]:
+            - generic [ref=e14]: THE JOURNAL (HOME)
+          - button "THE BATCH COLLECTIONS" [ref=e16] [cursor=pointer]:
+            - generic [ref=e17]: THE BATCH COLLECTIONS
+          - button "STOCKISTS INQUIRY" [ref=e18] [cursor=pointer]:
+            - generic [ref=e19]: STOCKISTS INQUIRY
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - button "en" [ref=e22] [cursor=pointer]
+            - button "ar" [ref=e23] [cursor=pointer]
+            - button "tr" [ref=e24] [cursor=pointer]
+          - button "Switch to Midnight Charcoal" [ref=e25] [cursor=pointer]:
+            - img [ref=e26]
+          - button "View Cart Provisions" [ref=e28] [cursor=pointer]:
+            - img [ref=e29]
+          - button "STOCKIST INQUIRY" [ref=e32]
+    - main [ref=e33]:
+      - generic [ref=e34]:
+        - generic [ref=e36]:
+          - generic [ref=e37]:
+            - generic [ref=e38]:
+              - generic [ref=e41]: RASHAH CO. / VOL. I
+              - generic [ref=e42]: RIYADH, SAUDI ARABIA
+            - generic [ref=e43]:
+              - generic [ref=e44]:
+                - heading "COARSE & REFINED HERITAGE PROVISIONS" [level=1] [ref=e45]
+                - paragraph [ref=e46]: Curated Heirloom Spices & Small-Batch Granolas sourced from micro-climes of the Levant, Anatolia & Beyond. Formulating sensory contrasts in Riyadh, Saudi Arabia. Coarse textures baked slowly, designed to erupt in aromatic power upon the very first sprinkle.
+              - generic [ref=e47]:
+                - generic [ref=e48]:
+                  - generic [ref=e49]: COARSE TEXTURE
+                  - generic [ref=e50]: Crafted carefully to retain natural crunch, allowing key aromatic oils to burst only upon bite.
+                - generic [ref=e51]:
+                  - generic [ref=e52]: ORIGIN PURITY
+                  - generic [ref=e53]: No preservatives, fillers, or refined sugars. Pure single-source minerals and premium botanicals.
+              - button "DISCOVER THE SERIES" [ref=e55] [cursor=pointer]:
+                - text: DISCOVER THE SERIES
+                - img [ref=e56]
+            - generic [ref=e59]:
+              - generic [ref=e60]: BATCH NO. 09-SA
+              - generic [ref=e61]: 24.7136° N, 46.6753° E
+          - generic [ref=e62]:
+            - generic [ref=e67]:
+              - generic [ref=e68]:
+                - img "Rashah Premium Artisanal Monolith Glass Jar containing Volcanic Sumac Blend" [ref=e69]
+                - generic:
+                  - generic: VESSEL STUDY 01
+                  - generic: CRIMSON & GOLD
+              - generic [ref=e70]:
+                - generic [ref=e71]:
+                  - generic [ref=e72]: FORMULA
+                  - generic [ref=e73]: SUM-VLC-01
+                - generic [ref=e74]:
+                  - generic [ref=e75]: NET WEIGHT
+                  - generic [ref=e76]: 120G e
+                - generic [ref=e77]:
+                  - generic [ref=e78]: RECYCLABLE
+                  - generic [ref=e79]: 100% GLASS
+            - generic [ref=e80]:
+              - img [ref=e81]
+              - generic [ref=e84]: Rashah Crafted Premium
+        - generic [ref=e86]:
+          - generic [ref=e87]:
+            - generic [ref=e88]:
+              - generic [ref=e89]: SHOP BY COLLECTION
+              - heading "The Lineup." [level=2] [ref=e90]
+            - paragraph [ref=e91]: Three distinct, premium culinary paths defined by texture and traditional milling recipes.
+          - generic [ref=e92]:
+            - generic [ref=e93]:
+              - generic [ref=e94]:
+                - generic [ref=e95]:
+                  - generic [ref=e96]: COLLECTION 01 / 02
+                  - generic [ref=e97]: سلسلة الحبوب
+                - heading "01 / GRAIN MATRIX" [level=3] [ref=e98]
+                - paragraph [ref=e99]: Ancient oats, toasted nuts, cold-pressed raw tahini and Damascus rose petals.
+                - img "Rashah Artisanal Premium Granola Container" [ref=e101]
+              - button "EXPLORE THE INDEX" [ref=e102] [cursor=pointer]:
+                - text: EXPLORE THE INDEX
+                - img [ref=e103]
+            - generic [ref=e105]:
+              - generic [ref=e106]:
+                - generic [ref=e107]:
+                  - generic [ref=e108]: COLLECTION 02 / 02
+                  - generic [ref=e109]: سلسلة البهارات
+                - heading "02 / FLOWER & SEED" [level=3] [ref=e110]
+                - paragraph [ref=e111]: Single-origin wild crops sun-dried and stone-broken for pure floral intensity.
+                - img "Rashah Artisanal Volcanic Spice Blend Container" [ref=e113]
+              - button "EXPLORE THE INDEX" [ref=e114] [cursor=pointer]:
+                - text: EXPLORE THE INDEX
+                - img [ref=e115]
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - generic [ref=e119]: "01"
+                - heading "Raw Integrity" [level=4] [ref=e120]:
+                  - img [ref=e121]
+                  - text: Raw Integrity
+                - paragraph [ref=e124]: Never powdered to dust. Our ingredients are crushed or rolled uniformly, leaving cell walls intact to seal intense essential oils inside.
+              - generic [ref=e125]:
+                - generic [ref=e126]: "02"
+                - heading "Riyadh Kitchen" [level=4] [ref=e127]:
+                  - img [ref=e128]
+                  - text: Riyadh Kitchen
+                - paragraph [ref=e131]: Formulated, blended, and hand-jarred in micro-batches right here in our specialized kitchen, ensuring strict quality logs over every single run.
+              - generic [ref=e132]:
+                - generic [ref=e133]:
+                  - generic [ref=e134]: "03"
+                  - heading "The Heavy Jar" [level=4] [ref=e135]:
+                    - img [ref=e136]
+                    - text: The Heavy Jar
+                  - paragraph [ref=e138]: Presented exclusively inside high-weight Recyclable glass containers with light-deflecting protection to shield botanicals from ultraviolet breakdown.
+                - generic [ref=e139]:
+                  - generic [ref=e140]: "CURRENT STATEMENT:"
+                  - generic [ref=e141]: "\"Perfect coarse textures that bloom in your cooking, not in the factory.\""
+        - generic [ref=e145]:
+          - generic [ref=e146]:
+            - generic [ref=e147]: رشة
+            - text: ESTABLISHED IN SAUDI ARABIA
+          - generic [ref=e148]:
+            - img [ref=e149]
+            - paragraph [ref=e152]: "\"We believe cooking is not a strict science of ounces, but a delicate art of small gestures.\""
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - heading "The Genesis of Coarse Rubs." [level=4] [ref=e155]
+              - generic [ref=e156]:
+                - paragraph [ref=e157]:
+                  - generic [ref=e158]: R
+                  - text: "ashah (رشة) was born out of a simple, rebellious dissatisfaction with the state of commercial seasonings. Modern culinary practices have reduced life-giving spices into uniform, tasteless powders which dissipate instantly upon storage. We asked ourselves: why allow the volatile botanical essential oils of premium herbs to perish inside industrial grinders?"
+                - paragraph [ref=e159]: Our philosophy is centered on raw physical integrity. We do not grind our single spices to passive dust. Instead, we coarsely hand-rub premium green cardamom pods, crush volcanic sumac stones, and slice pecan kernels with surgical precision. This ensures that every individual cluster of granola or grain of za’atar stores its aromatics safely, releasing them only when they are crushed under bite, filling your palate with absolute, unfiltered truth.
+            - generic [ref=e160]:
+              - heading "From Riyadh, Infused Locally." [level=4] [ref=e161]
+              - generic [ref=e162]:
+                - paragraph [ref=e163]: As an artisanal brand, our heritage is deeply rooted in Riyadh's evolving culinary renaissance. We build on the ancient Arabic custom of hospitality—where spices are not hidden behind kitchen counters, but presented on the table with great pride and reverence. Our formulas blend Middle Eastern heritage flavors like wild Thyme, Sumac, and Loomi with contemporary botanical elements such as Rose Buds and Premium Maple.
+                - paragraph [ref=e164]: "Every glass container that leaves our kitchen represents an authentic pact: you are receiving curated ingredients of unparalleled freshness, devoid of chemicals or refined sweeteners. Whether you are showering our Volcanic Sumac over cold home-strained labneh or scattering Rose Pecan loops onto fresh yogurt, you are participating in a quiet, ancestral revolution. One beautiful, deliberate gesture at a time."
+              - generic [ref=e165]:
+                - generic [ref=e166]:
+                  - generic [ref=e167]: The Founders of Rashah
+                  - text: ARTISANAL FLAVOR LOGISTICS
+                - generic [ref=e168]: رشة
+  - contentinfo [ref=e169]:
+    - generic [ref=e170]:
+      - generic [ref=e171]:
+        - generic [ref=e172]:
+          - generic [ref=e173]:
+            - generic [ref=e174]: RASHAH رشة
+            - generic [ref=e175]: ARTISANAL CRUNCH & BLOOM
+            - paragraph [ref=e176]: Curated Heirloom Spices & Small-Batch Granolas sourced from micro-climes of the Levant, Anatolia & Beyond. Formulating sensory contrasts in Riyadh, Saudi Arabia. Coarse textures baked slowly, designed to erupt in aromatic power upon the very first sprinkle.
+          - generic [ref=e177]:
+            - img [ref=e178]
+            - generic [ref=e181]: Perfecting pantry culture.
+        - generic [ref=e182]:
+          - generic [ref=e183]: SYSTEM SECTIONS
+          - list [ref=e184]:
+            - listitem [ref=e185]:
+              - button "THE JOURNAL (HOME) — الرشة الأولى" [ref=e186] [cursor=pointer]
+            - listitem [ref=e187]:
+              - button "THE BATCH COLLECTIONS — كتلوج الكولكشن" [ref=e188] [cursor=pointer]
+            - listitem [ref=e189]:
+              - button "STOCKISTS INQUIRY — تواصل معنا" [ref=e190] [cursor=pointer]
+        - generic [ref=e191]:
+          - generic [ref=e192]: METADATA LOGS
+          - generic [ref=e193]:
+            - generic [ref=e194]:
+              - generic [ref=e195]: REGISTRY CODE
+              - generic [ref=e196]: CR-101072935
+            - generic [ref=e197]:
+              - generic [ref=e198]: ELEVATION
+              - generic [ref=e199]: 612M Above Sea Level
+            - generic [ref=e200]:
+              - generic [ref=e201]: KITCHEN WORKFLOW
+              - generic [ref=e202]: MICRO-BATCH COMPLIANT
+        - generic [ref=e203]:
+          - generic [ref=e204]: RECEIVE BATCH JOURNAL
+          - paragraph [ref=e205]: Get raw bulletin dispatches on limited-run Single origin spices and specialty granola releases.
+          - generic [ref=e206]:
+            - textbox "Coordinate (your@email.com)" [ref=e207]
+            - button "Register email" [ref=e208] [cursor=pointer]:
+              - img [ref=e209]
+      - generic [ref=e211]:
+        - generic [ref=e212]:
+          - generic [ref=e213]: © 2026 RASHAH INC.
+          - generic [ref=e214]: •
+          - generic [ref=e215]: ALL SOVEREIGN RIGHTS RESERVED
+        - generic [ref=e216]:
+          - generic [ref=e217]: TERMS OF SPECISTRY
+          - generic [ref=e218]: •
+          - generic [ref=e219]: RIYADH, SAUDI ARABIA

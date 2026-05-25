@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchProductsApi } from '../data/products';
 import { Product, ProductCategory, CartItem } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
-import { Eye, Scale, Shield, Tag, Sparkles, X, ChevronRight, Plus, FileText, Globe, Heart } from 'lucide-react';
+import { Eye, Scale, Shield, Tag, Sparkles, X, ChevronRight, Plus, FileText, Globe, Heart, Star } from 'lucide-react';
+import { productRatings } from '../data/testimonials';
 import { useLanguage, useProductTranslation } from '../context/LanguageContext';
 import FlavorGuide from './FlavorGuide';
 
@@ -195,6 +196,24 @@ export default function Collections({ selectedCategory, setSelectedCategory, add
                     <span className="block text-[10px] tracking-[0.25em] text-brand-ochre font-bold uppercase font-mono-data mb-3 text-justify">
                       {product.subtitle}
                     </span>
+
+                    {/* Star rating */}
+                    {productRatings[product.id] && (
+                      <div className="flex items-center gap-1.5 mb-3">
+                        <div className="flex items-center gap-0.5">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star
+                              key={star}
+                              size={10}
+                              className="fill-brand-terracotta text-brand-terracotta"
+                            />
+                          ))}
+                        </div>
+                        <span className="font-mono-data text-[9px] text-brand-charcoal/50 dark:text-brand-cream/50 tracking-wide">
+                          {productRatings[product.id].stars.toFixed(1)} · {productRatings[product.id].count} reviews
+                        </span>
+                      </div>
+                    )}
 
                     <p className="text-xs text-brand-charcoal/65 dark:text-brand-cream/65 leading-relaxed line-clamp-2 min-h-[2.5rem] mb-6 text-justify">
                       {product.description}

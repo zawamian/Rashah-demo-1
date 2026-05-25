@@ -8,6 +8,7 @@ import Lineup from './components/Lineup';
 import Narrative from './components/Narrative';
 import Collections from './components/Collections';
 import Connect from './components/Connect';
+import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles } from 'lucide-react';
@@ -118,6 +119,9 @@ function AppContent() {
                 
                 {/* 3. Our Brand Narrative Editorial Block */}
                 <Narrative />
+
+                {/* 4. Customer Testimonials */}
+                <Testimonials />
               </motion.div>
             )}
 
