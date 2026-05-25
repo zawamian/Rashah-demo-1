@@ -22,6 +22,20 @@ export interface Product {
   image: string;
   featured: boolean;
   notes: string;
+  title_ar?: string;
+  title_tr?: string;
+  subtitle_ar?: string;
+  subtitle_tr?: string;
+  description_ar?: string;
+  description_tr?: string;
+  fullDescription_ar?: string;
+  fullDescription_tr?: string;
+  origin_ar?: string;
+  origin_tr?: string;
+  ingredients_ar?: string[];
+  ingredients_tr?: string[];
+  notes_ar?: string;
+  notes_tr?: string;
 }
 
 export interface InquiryFormInput {
