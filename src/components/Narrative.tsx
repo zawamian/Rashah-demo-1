@@ -1,12 +1,28 @@
-import { motion } from 'motion/react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { Quote } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Narrative() {
   const { t, language } = useLanguage();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Precision scroll tracking linked to this specific container
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Balanced, low-intensity transforms to prevent motion-sickness but feel extraordinarily high-end
+  const sloganScale = useTransform(scrollYProgress, [0, 1], [0.96, 1.04]);
+  const sloganOpacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.4, 1, 1, 0.4]);
+  const quoteFloat = useTransform(scrollYProgress, [0, 1], [-10, 10]);
 
   return (
-    <section className="w-full py-24 sm:py-32 bg-[#FAF7F2] dark:bg-[#181818] border-b border-brand-charcoal/10 dark:border-brand-cream/10 transition-colors duration-300 relative overflow-hidden">
+    <section 
+      ref={containerRef}
+      className="w-full py-24 sm:py-32 bg-[#FAF7F2] dark:bg-[#181818] border-b border-brand-charcoal/10 dark:border-brand-cream/10 transition-colors duration-300 relative overflow-hidden"
+    >
       
       {/* Decorative vertical thread thread grid */}
       <div className="absolute top-0 bottom-0 left-[15%] w-px bg-brand-charcoal/5 dark:bg-brand-cream/5" />
@@ -14,13 +30,10 @@ export default function Narrative() {
 
       <div className="max-w-4xl mx-auto px-6 relative z-10">
         
-        {/* Arabic brand slogan */}
+        {/* Arabic brand slogan with smooth scroll-linked scale and opacity */}
         <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="text-center mb-10"
+          style={{ scale: sloganScale, opacity: sloganOpacity }}
+          className="text-center mb-10 select-none"
         >
           <span className="font-serif text-5xl sm:text-7xl font-light text-brand-terracotta/25 dark:text-brand-terracotta/15 block uppercase tracking-[0.2em] leading-none mb-1">
             {t('logo_ar')}
@@ -30,12 +43,9 @@ export default function Narrative() {
           </span>
         </motion.div>
 
-        {/* Big quote statement */}
+        {/* Big quote statement with subtle floating transition */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          style={{ y: quoteFloat }}
           className="relative text-center mb-16 px-4 shrink-0"
         >
           <Quote size={32} className="text-brand-ochre mx-auto mb-6 opacity-30 animate-pulse" />

@@ -1,4 +1,5 @@
-import { motion } from 'motion/react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { ArrowDownRight, Compass } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import monolithJarHero from '../assets/images/monolith_jar_hero_1779726349623.png';
@@ -9,6 +10,17 @@ interface HeroProps {
 
 export default function Hero({ onExploreClick }: HeroProps) {
   const { t, dir, language } = useLanguage();
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  // Link scroll precision to the hero view
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  const imgParallaxY = useTransform(scrollYProgress, [0, 1], [0, 45]);
+  const vesselScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+  const typographyY = useTransform(scrollYProgress, [0, 1], [0, -15]);
 
   const coarseLabel = language === 'ar' ? 'قوام خشن ورائد' : (language === 'tr' ? 'KALIN DOKU' : 'COARSE TEXTURE');
   const coarseDesc = language === 'ar' 
@@ -31,11 +43,14 @@ export default function Hero({ onExploreClick }: HeroProps) {
   const craftedSubtitle = language === 'ar' ? 'علامة رشة الحرفية الممتازة' : (language === 'tr' ? 'Özel Rashah El İşçiliği' : 'Rashah Crafted Premium');
 
   return (
-    <section className="relative w-full border-b border-brand-charcoal/10 dark:border-brand-cream/10 bg-brand-cream dark:bg-brand-charcoal transition-colors duration-300">
+    <section ref={heroRef} className="relative w-full border-b border-brand-charcoal/10 dark:border-brand-cream/10 bg-brand-cream dark:bg-brand-charcoal transition-colors duration-300">
       <div className={`max-w-7xl mx-auto flex flex-col md:flex-row min-h-[calc(100vh-5rem)] ${dir === 'rtl' ? 'md:flex-row-reverse text-right' : ''}`}>
         
         {/* Left Column - Typography & Editorial Manifesto */}
-        <div className="w-full md:w-7/12 p-8 sm:p-12 md:p-16 flex flex-col justify-between border-r border-brand-charcoal/10 dark:border-brand-cream/10 text-left">
+        <motion.div 
+          style={{ y: typographyY }}
+          className="w-full md:w-7/12 p-8 sm:p-12 md:p-16 flex flex-col justify-between border-r border-brand-charcoal/10 dark:border-brand-cream/10 text-left"
+        >
           
           {/* Metadata Top */}
           <motion.div 
@@ -116,7 +131,7 @@ export default function Hero({ onExploreClick }: HeroProps) {
             <span>24.7136° N, 46.6753° E</span>
           </motion.div>
 
-        </div>
+        </motion.div>
 
         {/* Right Column - Premium High-Fidelity Monolith Jar Design Display */}
         <div className="w-full md:w-5/12 bg-brand-cream/50 dark:bg-brand-charcoal/30 flex flex-col justify-between relative p-8 sm:p-12 md:p-14 lg:p-16">
@@ -131,17 +146,19 @@ export default function Hero({ onExploreClick }: HeroProps) {
           <div className="my-auto flex flex-col items-center">
             
             <motion.div 
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
+              style={{ scale: vesselScale }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.3 }}
               className="relative w-full aspect-[4/5] bg-brand-cream dark:bg-brand-charcoal border border-brand-charcoal/10 dark:border-brand-cream/10 overflow-hidden group shadow-sm flex items-center justify-center p-4"
             >
               
               {/* Image with subtle high-end scaling hover effect */}
-              <img
+              <motion.img
+                style={{ y: imgParallaxY }}
                 src={monolithJarHero}
                 alt="Rashah Premium Artisanal Monolith Glass Jar containing Volcanic Sumac Blend"
-                className="w-full h-full object-contain transform group-hover:scale-[1.03] transition-transform duration-700 ease-out p-2"
+                className="w-full h-full object-contain p-2"
                 referrerPolicy="no-referrer"
               />
 

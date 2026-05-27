@@ -10,7 +10,7 @@ import Collections from './components/Collections';
 import Connect from './components/Connect';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import { Sparkles } from 'lucide-react';
 import { CartItem, PageId, Product } from './types';
 import Recipes from './components/Recipes';
@@ -28,6 +28,14 @@ function AppContent() {
   const [activePage, setActivePage] = useState<PageId>('home');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   
+  // Custom high-fidelity scroll indicator configuration
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 25,
+    restDelta: 0.001
+  });
+
   // High-performance client cart state
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     const saved = localStorage.getItem('rashah-cart');
@@ -86,6 +94,13 @@ function AppContent() {
   return (
     <div className="min-h-screen bg-brand-cream dark:bg-brand-charcoal text-brand-charcoal dark:text-brand-cream selection:bg-brand-terracotta selection:text-brand-cream transition-colors duration-400 font-sans flex flex-col justify-between">
       
+      {/* Premium Horizontal Scroll Progress Line (Reading Guide) */}
+      <motion.div 
+        id="scroll-progress-line"
+        className="fixed top-0 left-0 right-0 h-[3px] bg-brand-terracotta origin-left z-[100] pointer-events-none" 
+        style={{ scaleX }}
+      />
+
       <div>
         {/* Navigation Bar Header */}
         <Header 

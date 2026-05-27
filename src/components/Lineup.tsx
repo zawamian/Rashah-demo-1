@@ -151,16 +151,16 @@ export default function Lineup({ onSeriesSelect, onNavigateToCollections }: Line
           </motion.div>
 
           {/* Column 3: Artistic Manifesto & Spotlight (Span 3) */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="md:col-span-3 flex flex-col justify-between border-t md:border-t-0 md:border-l border-brand-charcoal/15 dark:border-brand-cream/15 pt-8 md:pt-0 md:pl-8 text-left"
-          >
+          <div className="md:col-span-3 flex flex-col justify-between border-t md:border-t-0 md:border-l border-brand-charcoal/15 dark:border-brand-cream/15 pt-8 md:pt-0 md:pl-8 text-left">
             
             {/* Value spotlight 1 */}
-            <div className="border-b border-brand-charcoal/10 dark:border-brand-cream/10 pb-8 text-left">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.7, type: "spring", damping: 18, stiffness: 100 }}
+              className="border-b border-brand-charcoal/10 dark:border-brand-cream/10 pb-8 text-left"
+            >
               <span className="font-mono-data text-[13px] text-brand-terracotta font-bold block mb-2">01</span>
               <h4 className="font-serif text-lg font-bold text-brand-charcoal dark:text-brand-cream mb-2 flex items-center gap-1.5 justify-start">
                 <Leaf size={14} className="text-brand-ochre shrink-0" /> {spot1_title}
@@ -168,10 +168,16 @@ export default function Lineup({ onSeriesSelect, onNavigateToCollections }: Line
               <p className="text-xs text-brand-charcoal/60 dark:text-brand-cream/60 leading-relaxed font-sans text-justify">
                 {spot1_desc}
               </p>
-            </div>
+            </motion.div>
 
             {/* Value spotlight 2 */}
-            <div className="border-b border-brand-charcoal/10 dark:border-brand-cream/10 py-8 text-left">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.7, delay: 0.15, type: "spring", damping: 18, stiffness: 100 }}
+              className="border-b border-brand-charcoal/10 dark:border-brand-cream/10 py-8 text-left"
+            >
               <span className="font-mono-data text-[13px] text-brand-terracotta font-bold block mb-2">02</span>
               <h4 className="font-serif text-lg font-bold text-brand-charcoal dark:text-brand-cream mb-2 flex items-center gap-1.5 justify-start">
                 <Sparkles size={14} className="text-brand-ochre shrink-0" /> {spot2_title}
@@ -179,31 +185,41 @@ export default function Lineup({ onSeriesSelect, onNavigateToCollections }: Line
               <p className="text-xs text-brand-charcoal/60 dark:text-brand-cream/60 leading-relaxed font-sans text-justify">
                 {spot2_desc}
               </p>
-            </div>
+            </motion.div>
 
             {/* Value spotlight 3 */}
-            <div className="pt-8 flex flex-col justify-between h-full text-left">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.7, delay: 0.25, type: "spring", damping: 18, stiffness: 100 }}
+              className="pt-8 flex flex-col justify-between h-full text-left"
+            >
               <div>
                 <span className="font-mono-data text-[13px] text-brand-terracotta font-bold block mb-2">03</span>
                 <h4 className="font-serif text-lg font-bold text-brand-charcoal dark:text-brand-cream mb-2 flex items-center gap-1.5 justify-start">
-                  <Star size={14} className="text-brand-ochre shrink-0" /> {spot3_title}
+                   <Star size={14} className="text-brand-ochre shrink-0" /> {spot3_title}
                 </h4>
                 <p className="text-xs text-brand-charcoal/60 dark:text-brand-cream/60 leading-relaxed font-sans mb-6 text-justify">
                   {spot3_desc}
                 </p>
               </div>
 
-              <div className="bg-brand-ochre/15 dark:bg-brand-ochre/10 p-5 border border-brand-ochre/20 text-left text-justify">
+              <motion.div 
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                className="bg-brand-ochre/15 dark:bg-brand-ochre/10 p-5 border border-brand-ochre/20 text-left text-justify"
+              >
                 <span className="font-mono-data text-[9px] tracking-widest text-brand-ochre font-extrabold uppercase block mb-1">
                   {currentStatementLabel}
                 </span>
                 <span className="text-[11px] text-brand-charcoal/80 dark:text-brand-cream/85 block leading-relaxed italic">
                   {currentStatementText}
                 </span>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-          </motion.div>
+          </div>
 
         </div>
 
